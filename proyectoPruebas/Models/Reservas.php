@@ -72,11 +72,36 @@ class Reservas { //extends Base_Datos1
     // metodos
 
     public function getReservasByIdLibro($idLibro){
-        
+        $this->conexion->consulta("SELECT * FROM reservas WHERE id_libro = $idLibro");
+        try{
+            return $this->conexion->extraer_todos();
+        }catch(PDOException $err){
+            return $err;
+
+        }
     }
 
     public function guardarReserva($id_usuario,$id_libro,$fecha,$devolucion){
-        
+        $this->conexion->consulta("INSERT INTO reservas (id_usuario,id_libro,fecha,devolucion) 
+                VALUES ('$id_usuario','$id_libro','$fecha','$devolucion')");
+        try{
+            return true;
+    }catch(PDOException $err){
+         return $err;
+
     }
+    }
+
+
+    public function Eliminar($id){
+        $sql = ("DELETE FROM reservas WHERE id = $id");
+        $this -> conexion -> consulta($sql);
+        
+}
+
+public function getAll(): ?array{
+    $this->conexion->consulta("SELECT *FROM reservas");
+    return $this->conexion->extraer_todos();
+}
 }
 ?>

@@ -47,8 +47,9 @@
 <div class="menu">
     <ul>
       <li><a href="mostrarPrestar">Prestar Libro</a></li>
-      <li><a href="">Devolver Libro</a></li>
+      <li><a href="mostrarReservados">Devolver Libro</a></li>
       <li><a href="sancionar">Sancionar</a></li>
+      <li><a href="insertarGet">Insertar Libros</a></li>
   </ul>
   </div>
 

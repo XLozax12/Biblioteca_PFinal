@@ -44,6 +44,10 @@ class BaseDatos  extends PDO{
     return $this->resultado->fetchAll(PDO::FETCH_ASSOC);
   }
   
+  public function extraer_todos2(): array {
+    return $this->resultado->fetchAll(PDO::FETCH_OBJ);
+    // fetch_assoc le dices que lo ponga en array
+  }
 
 
   public function ultimoIdInsertado(): int{

@@ -68,6 +68,7 @@ class Sanciones { //extends Base_Datos1
         $this -> conexion -> consulta($sql);
         
 }
+
 public function getAll(): ?array{
     $this->conexion->consulta("SELECT *FROM sanciones");
     return $this->conexion->extraer_todos();

@@ -6,6 +6,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 // use Controllers\ApiponenteController;
 use Controllers\UsuarioController;
 use Controllers\LibrosController;
+use Controllers\SancionarController;
 use Lib\Router;
 
 use Dotenv\Dotenv;
@@ -52,7 +53,16 @@ Router::add('GET','/mostrarPrestar', function (){
         
 Router::add('GET','/sancionar', function (){
 
-    (new SancionarController())->mostrarSancion();});   
+    (new SancionarController())->mostrarSancion();}); 
+Router::add('POST','/eliminar', function (){
+
+    (new SancionarController())->Eliminar();}); 
+Router::add('POST','/eliminarReservados', function (){
+
+    (new LibrosController())->eliminarReservados();});
+Router::add('GET','/mostrarReservados', function (){
+
+    (new LibrosController())->listadoCompletoReservas();});   
 
 Router::add('GET','/devolver', function (){
 
@@ -61,8 +71,25 @@ Router::add('GET','/devolver', function (){
 Router::add('POST','/prestar', function (){
 
     (new LibrosController())->prestar();});
-    
+
+Router::add('POST','/reservar', function (){
+
+    (new LibrosController())->reservar();});
+
+Router::add('POST','/crearSancion', function (){
+
+    (new LibrosController())->crearSancion();});
+
+Router::add('GET','/insertarGet', function (){
+
+    (new LibrosController())->insertarLibro();});
+
+Router::add('POST','/insertarPost', function (){
+
+    (new LibrosController())->insertarLibro();});
+
 Router::dispatch();
+
 ?>
 
 

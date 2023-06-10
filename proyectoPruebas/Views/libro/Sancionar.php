@@ -16,7 +16,6 @@
     .caja1{
         display: flex;
 	      justify-content:  center;
-	     /* align-items: center;  */
         
     }
     .caja2{
@@ -24,11 +23,26 @@
 	      justify-content:  center;
         
     }
-    .image{
-      display: flex;
-	    justify-content: center;
-      /* align-items: center; */
+    img{
+      width: 100px;
+      height: 100px;
     }
+    table {
+        border-collapse: collapse;
+    }
+ 
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        background-color: #ffffcc;
+    }
+ 
+    th,
+    td {
+        padding: 5px;
+    }
+    
     .menu{
       display: flex;
 	    justify-content:  center;
@@ -47,57 +61,64 @@
     </style>
 </head>
 <body>
+<div class="image">
+<img src="../images/guadix1.png">
 <a href="logout" class="cerrar">Cerrar sesión</a>
+</div>
 <a href="inicio" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
 <div class="menu">
     <ul>
       <li><a href="mostrarPrestar">Prestar Libro</a></li>
-      <li><a href="">Devolver Libro</a></li>
+      <li><a href="mostrarReservados">Devolver Libro</a></li>
       <li><a href="sancionar">Sancionar</a></li>
+      <li><a href="insertarGet">Insertar Libros</a></li>
   </ul>
-  </div>
+</div>
 
-<form method="POST" action="sancionar">
+<form method="POST" action="crearSancion">
 <div class="caja1">
     <label for="usuario">Usarios</label>
     <select id="usuario" name="usuario">
       <?php foreach($usuarios as $usuario): ?>
       <option value="<?=$usuario['id'] ?>"><?=$usuario['nombre'] ?></option>
       <?php endforeach; ?>
-    </select>
+    </select>|
 
 <button type="submit" name="sancionar" id="sancionar">Sancionar</button>
-</div><br>
+
+</div>
+</form>
+<br>
 <div class="caja2">
 
 <table>
   <thead>
     <tr>
-      <!-- <th>id</th> -->
-      <th>Nombre</th>
+       <th>id</th> 
+       <th>Nombre</th>
+      <th>Fecha Inicio</th>
       <th>Fecha fin</th>
-      <th>Fecha inicio</th>
-      <td><b>Operaciones</b></td>
+      <td><b>Operaciones</b></td> 
       
     </tr>
   </thead>
-  
-    <?php foreach($sanciones as $fila):?>
+  <?php//print_r($sanciones);die;?>
+    <?php foreach($sanciones as $fila):?> 
+      <?php //echo"1";?>
       <tr>
-      <!-- <td><?php //echo $fila["id"]?></td> -->
+      <!-- <td><?php //echo $fila["id"]?></td> --> 
       <td><?php echo $fila["id_usuario"]?></td>
       <td><?php echo $fila["fecha_inicio"]?></td>
       <td><?php echo $fila["fecha_fin"]?></td>
-       <form action="?controller=Sancionar&action=Eliminar" method="post">
+       <?php //print_r($fila); die; ?> 
+       <form action="eliminar" method="post">
        <td><button type="submit"  name="borrar" value="<?= $fila["id"]; ?>">Eliminar</button></td>
        </form>
       </tr>
     <?php endforeach; ?>
 </table><br>
 
-<!-- </form> <br><br>
-<div class="image">
-<img src="../images/guadix1.png">-->
-</div> 
+</form> 
+<br> 
 </body>
 </html>

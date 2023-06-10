@@ -75,8 +75,9 @@
   <?php if($_SESSION['rol_usuario'] == 'bibliotecario'): ?>
     <ul>
       <li><a href="mostrarPrestar">Prestar Libro</a></li>
-      <li><a href="">Devolver Libro</a></li>
+      <li><a href="mostrarReservados">Devolver Libro</a></li>
       <li><a href="sancionar">Sancionar</a></li>
+      <li><a href="insertarGet">Insertar Libros</a></li>
   </ul>
   </div>
   <?php endif; ?>
@@ -101,7 +102,7 @@
       <td><?php echo $fila["titulo"]?></td>
       <td><?php echo $fila["autor"]?></td>
       <td><?php echo $fila["editorial"]?></td>
-       <form action="?controller=Libros&action=reservar" method="post">
+       <form action="reservar" method="post">
        <td><button type="submit"  name="reservar" value="<?= $fila["id"]; ?>">Reservar</button></td>
        </form>
       </tr>

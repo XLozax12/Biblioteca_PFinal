@@ -71,41 +71,34 @@ class Libro { //extends Base_Datos1
 
 }
 
+public function getLibroById($id) {
+    $this->conexion->consulta("SELECT * FROM libros WHERE id = $id");
+    try{
+        return $this->conexion->extraer_registro();
+    }catch(PDOException $err){
+        return $err;
+
+    }
+}
 
 
+public function insertarLibro($titulo,$autor,$editorial,$cantidad){
+    $sql = $this->conexion->preparada("INSERT INTO libros (titulo,autor,editorial,cantidad) 
+    VALUES (:titulo,:autor,:editorial,:cantidad)");
+    $sql->bindParam(':titulo',$titulo);
+    $sql->bindParam(':autor',$autor);
+    $sql->bindParam(':editorial',$editorial);
+    $sql->bindParam(':cantidad',$cantidad);
 
+    try{
+            $sql->execute();
+            return true;
+    }catch(PDOException $err){
+         return $err;
 
-    
-// 
-// public function login($email,$password){
+    }
 
-//     $sql = ("SELECT * FROM usuarios WHERE email = $email");
-//         $this -> conexion -> consulta($sql);
-//         $password=$this -> conexion -> extraer_registro();
-//         echo $password;
-
-// }
-
-
-// public function register($nombre,$apellidos,$email,$password,$rol){
-//     $hash_password =password_hash($password,PASSWORD_DEFAULT);
-    
-//     $sql = $this->conexion->preparada("INSERT INTO usuarios (nombre,apellido,email,`password`,rol) VALUES (:nombre,:apellido,:email,:pass,:rol)");
-//         $sql->bindParam(':nombre',$nombre);
-//         $sql->bindParam(':apellido',$apellidos);
-//         $sql->bindParam(':email',$email);
-//         $sql->bindParam(':pass',$hash_password);
-//         $sql->bindParam(':rol',$rol);
-
-//         try{
-//                 $sql->execute();
-//                 return true;
-//         }catch(PDOException $err){
-//              return $err;
-
-//         }
-
-// }
+}
 
 
     
