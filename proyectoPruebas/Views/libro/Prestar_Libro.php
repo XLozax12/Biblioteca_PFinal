@@ -43,13 +43,15 @@
 </head>
 <body>
 <a href="logout" class="cerrar">Cerrar sesión</a>
-<a href="inicio" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
+<a href="home" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
 <div class="menu">
     <ul>
       <li><a href="mostrarPrestar">Prestar Libro</a></li>
       <li><a href="mostrarReservados">Devolver Libro</a></li>
       <li><a href="sancionar">Sancionar</a></li>
-      <li><a href="insertarGet">Insertar Libros</a></li>
+      <li><a href="librosDevueltos">Libros Devueltos</a></li>
+      <li><a href="pendienteSancion">Pendiente Sanción</a></li>
+      <li><a href="mostrarFormularioLibro">Insertar Libros</a></li>
   </ul>
   </div>
 
@@ -58,9 +60,9 @@
     <label for="usuario">Usarios</label>
     <select id="usuario" name="usuario">
       <?php foreach($usuarios as $usuario): ?>
-      <option value="<?=$usuario['id'] ?>"><?=$usuario['nombre'] ?></option>
+      <option value="<?=$usuario['id'] ?>"><?=$usuario['socio'].' - '.$usuario['nombre'] ?></option>
       <?php endforeach; ?>
-    </select>&      
+    </select>&   
 
     <label for="libro">Listado de libros</label>
       <select id="libro" name="libro">

@@ -28,6 +28,10 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+        a{
+            /* text-decoration: none; */
+            color:black;
+        }
         
         .error{
             background: red;
@@ -36,14 +40,14 @@
     </style>
 </head>
 <body>
-<h1  class="biblioteca">Biblioteca Guadix</h1>
+<a href="inicio" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
 <form action="registrar" method="post">
     <div class="caja1">
     Nombre<input type="text" name="nombre" id="nombre" required ><br>
     <div class="error">
     <?php
     // if($errores){
-    //     echo $errores["error_titulo"];
+    //     echo $errores["error_nombre"];
     // }
     ?>
     </div>
@@ -53,7 +57,7 @@
     <div class="error">
     <?php
     // if($errores){
-    //     echo $errores["error_titulo"];
+    //     echo $errores["error_apellidos"];
     // }
     ?>
     </div>
@@ -63,7 +67,7 @@
     <div class="error">
     <?php
     // if($errores){
-    //     echo $errores["error_titulo"];
+    //     echo $errores["error_email"];
     // }
     ?>
     </div>
@@ -73,7 +77,7 @@
     <div class="error">
     <?php
     // if($errores){
-    //     echo $errores["error_descripcion"];
+    //     echo $errores["error_password"];
     // }
     ?>
     </div>

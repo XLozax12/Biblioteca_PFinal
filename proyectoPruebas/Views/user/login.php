@@ -47,7 +47,7 @@
     <div class="error">
     <?php
     // if($errores){
-    //     echo $errores["error_titulo"];
+    //     echo $errores["error_email"];
     // }
     ?>
     </div>
@@ -57,7 +57,7 @@
     <div class="error">
     <?php
     // if($errores){
-    //     echo $errores["error_descripcion"];
+    //     echo $errores["error_password"];
     // }
     
     ?>

@@ -33,19 +33,29 @@ class SancionarController{
     public function listadoCompletoSanciones(){
       
         $sanciones = $this->sanciones->getAll();
+        $usuarios = $this->usuario->mostrarUsuarios();
         //  print_r($sanciones);die;
-        $this->pages->render('libro/Sancionar',['sanciones'=>$sanciones]);
-        
-        
+        $this->pages->render('libro/Sancionar',['sanciones'=>$sanciones,'usuarios'=> $usuarios]);
         
     }
 
+
     public function crearSancion() {
-      $fecha_inicio = fecha('Y-m-d');
-      $fecha_fin=date('Y-m-d', strtotime($fecha_inicio . ' +7 days'));
+      $fecha_inicio = date('Y-m-d');
+      $fecha_fin= date('Y-m-d', strtotime($fecha_inicio . ' +7 days'));
+
+      $result = $this->sanciones->sancionar($_POST['usuario'],$fecha_inicio,$fecha_fin);
+      if($result) {
+        $this->listadoCompletoSanciones();
+      }
+      else {
+        echo 'ERROR AL SANCIONAR';
+        $this->listadoCompletoSanciones();
+      }
       //FECHA INICIO SEA HOY
       //FECHA FIN SEA 7 DIAS A PARTIR DE HOY  busca un metodo para sumar dias a una fecha
     }
+
 
   public function Eliminar(){
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -71,8 +81,11 @@ class SancionarController{
 
       }
     
+      public function pendienteSancion() {
+        $sanciones = $this->reserva->getReservasConFechaMenorAHoy();
 
-
+        $this->pages->render('libro/pendiente_sancionar',['sanciones'=>$sanciones]);
+      }
 
 }
 ?>

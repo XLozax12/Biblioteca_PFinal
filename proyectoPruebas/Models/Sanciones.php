@@ -60,19 +60,35 @@ class Sanciones { //extends Base_Datos1
 
 
     // metodos
-    public function sancionar(){
-        
+    public function sancionar($id_usuario,$fecha_inicio,$fecha_fin){
+        $sql = $this->conexion->preparada("INSERT INTO sanciones (id_usuario,fecha_inicio,fecha_fin) 
+        VALUES (:id_usuario,:fecha_inicio,:fecha_fin)");
+        $sql->bindParam(':id_usuario',$id_usuario);
+        $sql->bindParam(':fecha_inicio',$fecha_inicio);
+        $sql->bindParam(':fecha_fin',$fecha_fin);
+    
+        try{
+                $sql->execute();
+                return true;
+        }catch(PDOException $err){
+             return $err;
+    
+        }
     }
+
     public function Eliminar($id){
         $sql = ("DELETE FROM sanciones WHERE id = $id");
         $this -> conexion -> consulta($sql);
         
-}
+    }
 
-public function getAll(): ?array{
-    $this->conexion->consulta("SELECT *FROM sanciones");
-    return $this->conexion->extraer_todos();
-}
+    public function getAll(): ?array{
+        $this->conexion->consulta("SELECT s.*, u.nombre as nombre, u.socio as numero_socio 
+        FROM sanciones s
+        INNER JOIN usuarios u ON u.id = s.id_usuario
+        ");
+        return $this->conexion->extraer_todos();
+    }
 
 
 }

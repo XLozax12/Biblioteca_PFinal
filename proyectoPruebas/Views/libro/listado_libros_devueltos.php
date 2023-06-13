@@ -87,7 +87,6 @@
       <th>Libro</th>
       <th>Fecha</th>
       <th>Devolucion</th>
-      <td><b>Operaciones</b></td>
       
     </tr>
   </thead>
@@ -100,9 +99,6 @@
       <td><?php echo $fila["titulo"]?></td>
       <td><?php echo $fila["fecha"]?></td>
       <td><?php echo $fila["devolucion"] == 1 ? 'Si' : 'No'?></td>
-       <form action="eliminarReservados" method="post">
-       <td><button type="submit"  name="borrar" value="<?= $fila["id"]; ?>">Devolver</button></td>
-       </form>
       </tr>
     <?php endforeach; ?>
 </table><br>

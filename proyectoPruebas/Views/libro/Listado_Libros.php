@@ -66,10 +66,10 @@
 <img src="../images/guadix1.png">
 <a href="logout" class="cerrar">Cerrar sesión</a>
 </div>
-  <a href="inicio" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
+  <a href="home" class="biblioteca"><h1>Biblioteca Guadix</h1></a>
   <div class="rol">
-  Estás logueado como: 
-  <?=$_SESSION['rol_usuario']; ?>
+  <!-- Estás logueado como:  -->
+  <!-- $_SESSION['rol_usuario'];  -->
   </div><br>
   <div class="menu">
   <?php if($_SESSION['rol_usuario'] == 'bibliotecario'): ?>
@@ -77,7 +77,9 @@
       <li><a href="mostrarPrestar">Prestar Libro</a></li>
       <li><a href="mostrarReservados">Devolver Libro</a></li>
       <li><a href="sancionar">Sancionar</a></li>
-      <li><a href="insertarGet">Insertar Libros</a></li>
+      <li><a href="librosDevueltos">Libros Devueltos</a></li>
+      <li><a href="pendienteSancion">Pendiente Sanción</a></li>
+      <li><a href="mostrarFormularioLibro">Insertar Libros</a></li>
   </ul>
   </div>
   <?php endif; ?>
@@ -111,7 +113,6 @@
 
 
 </div>
-<!-- <p>El numero total de rutas es:</p> -->
 
 
     

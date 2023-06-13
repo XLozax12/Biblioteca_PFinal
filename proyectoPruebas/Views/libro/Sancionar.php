@@ -65,13 +65,15 @@
 <img src="../images/guadix1.png">
 <a href="logout" class="cerrar">Cerrar sesión</a>
 </div>
-<a href="inicio" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
+<a href="home" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
 <div class="menu">
     <ul>
       <li><a href="mostrarPrestar">Prestar Libro</a></li>
       <li><a href="mostrarReservados">Devolver Libro</a></li>
       <li><a href="sancionar">Sancionar</a></li>
-      <li><a href="insertarGet">Insertar Libros</a></li>
+      <li><a href="librosDevueltos">Libros Devueltos</a></li>
+      <li><a href="pendienteSancion">Pendiente Sanción</a></li>
+      <li><a href="mostrarFormularioLibro">Insertar Libros</a></li>
   </ul>
 </div>
 
@@ -80,7 +82,7 @@
     <label for="usuario">Usarios</label>
     <select id="usuario" name="usuario">
       <?php foreach($usuarios as $usuario): ?>
-      <option value="<?=$usuario['id'] ?>"><?=$usuario['nombre'] ?></option>
+      <option value="<?=$usuario['id'] ?>"><?=$usuario['socio'].' - '.$usuario['nombre'] ?></option>
       <?php endforeach; ?>
     </select>|
 
@@ -95,6 +97,7 @@
   <thead>
     <tr>
        <th>id</th> 
+       <th>Numero de socio</th>
        <th>Nombre</th>
       <th>Fecha Inicio</th>
       <th>Fecha fin</th>
@@ -107,7 +110,9 @@
       <?php //echo"1";?>
       <tr>
       <!-- <td><?php //echo $fila["id"]?></td> --> 
-      <td><?php echo $fila["id_usuario"]?></td>
+      <td><?php echo $fila["id"]?></td>
+      <td><?php echo $fila["numero_socio"]?></td>
+      <td><?php echo $fila["nombre"]?></td>
       <td><?php echo $fila["fecha_inicio"]?></td>
       <td><?php echo $fila["fecha_fin"]?></td>
        <?php //print_r($fila); die; ?> 

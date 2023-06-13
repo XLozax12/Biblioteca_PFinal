@@ -53,7 +53,8 @@ Router::add('GET','/mostrarPrestar', function (){
         
 Router::add('GET','/sancionar', function (){
 
-    (new SancionarController())->mostrarSancion();}); 
+    (new SancionarController())->listadoCompletoSanciones();}); 
+
 Router::add('POST','/eliminar', function (){
 
     (new SancionarController())->Eliminar();}); 
@@ -78,15 +79,23 @@ Router::add('POST','/reservar', function (){
 
 Router::add('POST','/crearSancion', function (){
 
-    (new LibrosController())->crearSancion();});
+    (new SancionarController())->crearSancion();});
 
-Router::add('GET','/insertarGet', function (){
+Router::add('GET','/mostrarFormularioLibro', function (){
+
+    (new LibrosController())->mostrarFormularioLibro();});
+
+Router::add('POST','/insertarLibro', function (){
 
     (new LibrosController())->insertarLibro();});
 
-Router::add('POST','/insertarPost', function (){
+Router::add('GET','/librosDevueltos', function (){
 
-    (new LibrosController())->insertarLibro();});
+    (new LibrosController())->librosDevueltos();});
+
+Router::add('GET','/pendienteSancion', function (){
+
+    (new SancionarController())->pendienteSancion();});
 
 Router::dispatch();
 

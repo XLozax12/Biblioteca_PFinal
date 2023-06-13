@@ -4,7 +4,7 @@ namespace Controllers;
 use Models\Usuario;
 use Models\Libro;
 use Lib\Pages;
-use Utils\Validation;
+use Lib\Validation;
 
 class UsuarioController{
     private Pages $pages;
@@ -41,17 +41,20 @@ class UsuarioController{
                   $this->pages->render('libro/Listado_Libros',['libros'=>$libros]);
           
                 }else{
-                  echo"datos incorrectos";
+                  echo "<script>alert('Datos incorrectos , REGISTRESE')</script>";
+                  $this->pages->render("user/login");
                 }
               }else{
                 $errores["error_email"]=Validation::validar_requerido($email,"email");
                 $errores["error_password"]=Validation::validar_requerido($password,"password");
                 
-                require_once 'views\user\login.php';
+                // require_once 'views\user\login.php';
+                $this->pages->render('user\login',['errores'=>$errores]);
               }
               
             }else{
-              require_once 'views\user\login.php';
+              // require_once 'views\user\login.php';
+              $this->pages->render('user\login',['errores'=>$errores]);
             }
           
 
@@ -82,19 +85,22 @@ class UsuarioController{
               if($result){
                 $this->mostrarLogin();
               }
+              else {
+                $this->mostrarRegistro();
+
+              }
             }else{
-              
               $errores["error_nombre"]=Validation::validar_requerido($nombre,"nombre");
               $errores["error_apellidos"]=Validation::validar_requerido($apellidos,"apellidos");
               $errores["error_email"]=Validation::validar_requerido($email,"email");
               $errores["error_password"]=Validation::validar_requerido($password,"password");
               
               
-              require_once 'views\user\register.php';
+              $this->mostrarRegistro();
             }
             
           }else{
-            require_once 'views\user\register.php';
+            $this->mostrarRegistro();
           }
         
 
@@ -102,6 +108,8 @@ class UsuarioController{
 
     public function mostrarRegistro(){
         return $this->pages->render("user/register");
+        // return $this->pages->render("user/register",['errores'=>$errores]);
+
     }
 
     public function logout(){
@@ -117,9 +125,6 @@ class UsuarioController{
       $this->pages->render('libro/Listado_Libros',['usuarios'=>$usuarios]);
         
     }
-
-
-
 
 }
 ?>

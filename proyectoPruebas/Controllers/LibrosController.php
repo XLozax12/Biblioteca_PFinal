@@ -5,7 +5,7 @@ use Models\Libro;
 use Models\Usuario;
 use Models\Reservas;
 use Lib\Pages;
-use Utils\Validation;
+use Lib\Validation;
 
 class LibrosController{
     private Pages $pages;
@@ -28,6 +28,7 @@ class LibrosController{
         $this->pages->render('libro/Listado_Libros',['libros'=>$libros]);
         
     }
+
     public function mostrarPrestar(){
         $libros = $this->libro->getAll();
         $usuarios = $this->usuario->mostrarUsuarios();
@@ -49,8 +50,18 @@ class LibrosController{
                 $libro = $this->libro->getLibroById($_POST['libro']);
                 $cantidad = $libro['cantidad'];
 
+
+                $reservasUsuario = $this->reserva->getReservasByIdUsuarioYIdLibro($_POST['usuario'],$_POST['libro']);
+                
+                if(count($reservasUsuario) > 0) {
+                    echo "<script>alert('Este libro ya lo ha reservado esta persona')</script>";
+                    $this->listadoCompleto();
+                    die;
+                }
+
                 if(count($reservas) >= $cantidad){
-                    echo 'Estos libros ya estan reservados';
+                    echo "<script>alert('Estos libros ya estan reservados')</script>";
+                    $this->listadoCompleto();
                     die;
                 }
 
@@ -62,6 +73,7 @@ class LibrosController{
                 
                 if($result){
                     $this->listadoCompleto();
+                    echo "<script>alert('Libro reservado con exito')</script>";
                 }
 
                 }
@@ -74,6 +86,7 @@ class LibrosController{
             }
                   
     }
+
 
     public function reservar(){
         // ESTE MÉTODO PRESTARÁ UN LIBRO
@@ -92,10 +105,20 @@ class LibrosController{
                 $libro = $this->libro->getLibroById($id_libro);
                 $cantidad = $libro['cantidad'];
 
-                if(count($reservas) >= $cantidad){
-                    echo 'Estos libros ya estan reservados';
+                $reservasUsuario = $this->reserva->getReservasByIdUsuarioYIdLibro($id_usuario,$id_libro);
+                
+                if(count($reservasUsuario) > 0) {
+                    echo "<script>alert('Este libro ya lo ha reservado esta persona')</script>";
+                    $this->listadoCompleto();
                     die;
                 }
+
+                if(count($reservas) >= $cantidad){
+                    $this->listadoCompleto();
+                    echo "<script>alert('Estos libros ya estan reservados')</script>";
+                    die;
+                }
+                
 
             
                 $fecha = date("Y-m-d");
@@ -105,6 +128,7 @@ class LibrosController{
                 
                 if($result){
                     $this->listadoCompleto();
+                    echo "<script>alert('Libro reservado con exito')</script>";
                 }
 
                 }
@@ -120,12 +144,17 @@ class LibrosController{
 
 // reservados
 
+    public function librosDevueltos() {
+        $reserva = $this->reserva->mostrarReservasDevueltas();
+        $this->pages->render('libro/listado_libros_devueltos',['reserva'=>$reserva]);
+    }
+
     public function listadoCompletoReservas(){
-        $reserva = $this->reserva->getAll();
+        $reserva = $this->reserva->mostrarReservasNoDevueltas();
         $this->pages->render('libro/Listado_Libros_Reservados',['reserva'=>$reserva]);
     
-    
     }
+
     public function eliminarReservados(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Comprobar si el campo de nombre no está vacío
@@ -137,7 +166,8 @@ class LibrosController{
               
                 
 
-            $this->reserva->Eliminar($id);
+            $this->reserva->actualizarDevolucion($id);
+            echo "<script>alert('Libro devuelto con exito')</script>";
     
           }else{
             echo "no se ha podido eliminar";
@@ -148,6 +178,11 @@ class LibrosController{
   
   
             }
+
+    public function mostrarFormularioLibro() {
+        $this->pages->render('libro/insertar_Libro');
+    }
+
     // insertar
     public function insertarLibro(){
         $result=[];
@@ -155,42 +190,38 @@ class LibrosController{
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           // validar
           $titulo = filter_var($_POST["titulo"],  FILTER_SANITIZE_STRING);
-          $descripcion= filter_var($_POST["autor"],  FILTER_SANITIZE_STRING);
-          $desnivel = filter_var($_POST["editorial"], FILTER_SANITIZE_STRING);
-          $distancia = filter_var($_POST["cantidad"], FILTER_SANITIZE_NUMBER_FLOAT);
+          $autor= filter_var($_POST["autor"],  FILTER_SANITIZE_STRING);
+          $editorial = filter_var($_POST["editorial"], FILTER_SANITIZE_STRING);
+          $cantidad = filter_var($_POST["cantidad"], FILTER_SANITIZE_NUMBER_FLOAT);
         //   var_dump($titulo);
         //   var_dump($descripcion);
 
-            if (!empty($titulo) && !empty($autor) && !empty($editorial) && Validation::validar_float($cantidad) ) {
+            if (!empty($titulo) && !empty($autor) && !empty($editorial) && !empty($cantidad) ) {
             // echo "hola";
 
-              $result= $this->Libro->insertarLibro($titulo,$autor,$editorial,$cantidad);
+              $result= $this->libro->insertarLibro($titulo,$autor,$editorial,$cantidad);
               
               if($result){
-                // $this->listadoCompleto();
-                echo "Se ha añadido con exito";
+                $this->listadoCompleto();
               }
             }else{
               
-            //   $errores["error_titulo"]=Validation::validar_requerido($titulo,"titulo");
-            //   $errores["error_autor"]=Validation::validar_requerido($descripcion,"autor");
-            //   $errores["error_editorial"]=Validation::validar_requerido($desnivel,"editorial");
-            //   $errores["error_cantidad"]=Validation::mensaje_validar_float($distancia,"cantidad");
+            $errores["error_titulo"]=Validation::validar_requerido($titulo,"titulo");
+            $errores["error_autor"]=Validation::validar_requerido($autor,"autor");
+            $errores["error_editorial"]=Validation::validar_requerido($editorial,"editorial");
+            $errores["error_cantidad"]=Validation::validar_requerido($cantidad,"cantidad");
               
               
-            $this->pages->render('libro/insertar_Libro');
+            $this->pages->render('libro/insertar_Libro',['errores'=>$errores]);
+    
             }
             // var_dump($id);
             // die();
           }
           else{
-            $this->pages->render('libro/insertar_Libro');
+            $this->pages->render('libro/insertar_Libro',['errores'=>$errores]);
           }
         
-
-
-
-
         }
 
 

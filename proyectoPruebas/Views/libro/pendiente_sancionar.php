@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-    .biblioteca{
+      .biblioteca{
       text-align: center;
       color:black;
     }  
@@ -16,14 +16,13 @@
     .caja1{
         display: flex;
 	      justify-content:  center;
-	     /* align-items: center;  */
         
     }
-    /* .caja2{
+    .caja2{
         display: flex;
 	      justify-content:  center;
         
-    } */
+    }
     img{
       width: 100px;
       height: 100px;
@@ -43,6 +42,7 @@
     td {
         padding: 5px;
     }
+    
     .menu{
       display: flex;
 	    justify-content:  center;
@@ -74,40 +74,42 @@
       <li><a href="librosDevueltos">Libros Devueltos</a></li>
       <li><a href="pendienteSancion">Pendiente Sanción</a></li>
       <li><a href="mostrarFormularioLibro">Insertar Libros</a></li>
+      
   </ul>
-</div><br>
+</div>
 
-<div class="caja1">
+<br>
+<div class="caja2">
+
 <table>
   <thead>
     <tr>
-      <!-- <th>id</th> -->
-      <th>Numero Socio</th>
-      <th>Usuario</th>
-      <th>Libro</th>
+       <th>id</th> 
+       <th>Numero de socio</th>
+       <th>Nombre</th>
       <th>Fecha</th>
-      <th>Devolucion</th>
-      <td><b>Operaciones</b></td>
+      <td><b>Operaciones</b></td> 
       
     </tr>
   </thead>
-  
-    <?php foreach($reserva as $fila):?> 
+  <?php//print_r($sanciones);die;?>
+    <?php foreach($sanciones as $fila):?> 
+      <?php //echo"1";?>
       <tr>
       <!-- <td><?php //echo $fila["id"]?></td> --> 
+      <td><?php echo $fila["id"]?></td>
       <td><?php echo $fila["numero_socio"]?></td>
-      <td><?php echo $fila["nombre_usuario"]?></td>
-      <td><?php echo $fila["titulo"]?></td>
+      <td><?php echo $fila["nombre"]?></td>
       <td><?php echo $fila["fecha"]?></td>
-      <td><?php echo $fila["devolucion"] == 1 ? 'Si' : 'No'?></td>
-       <form action="eliminarReservados" method="post">
-       <td><button type="submit"  name="borrar" value="<?= $fila["id"]; ?>">Devolver</button></td>
+       <?php //print_r($fila); die; ?> 
+       <form action="crearSancion" method="post">
+       <td><button type="submit"  name="usuario" value="<?= $fila["id_usuario"]; ?>">Sancionar</button></td>
        </form>
       </tr>
     <?php endforeach; ?>
 </table><br>
 
 </form> 
-<br>
+<br> 
 </body>
 </html>

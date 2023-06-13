@@ -115,14 +115,21 @@ public function login($email,$password){
 public function register($nombre,$apellidos,$email,$password,$rol){
     $hash_password =password_hash($password,PASSWORD_DEFAULT);
     
-    $sql = $this->conexion->consulta("INSERT INTO usuarios (nombre,apellidos,email,password,rol) VALUES ('$nombre','$apellidos','$email','$hash_password','$rol')");
+
         try{
-                //$sql->execute();
+            $sql = $this->conexion->consulta("INSERT INTO usuarios (nombre,apellidos,email,password,rol) 
+            VALUES ('$nombre','$apellidos','$email','$hash_password','$rol')");
                 return true;
         }catch(PDOException $err){
             //return CON EL MENSAJE DE ERROR
             //  return $err;
-             return "No estas logueado";
+            if ($err->errorInfo[1] == 1062) {
+                echo "<script>alert('Ya estas registrado con ese email')</script>";
+                return false;
+             } else {
+                return $error;
+             }
+             
 
         }
 
