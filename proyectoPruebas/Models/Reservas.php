@@ -91,9 +91,9 @@ class Reservas { //extends Base_Datos1
         }
     }
 
-    public function guardarReserva($id_usuario,$id_libro,$fecha,$devolucion){
-        $this->conexion->consulta("INSERT INTO reservas (id_usuario,id_libro,fecha,devolucion) 
-                VALUES ('$id_usuario','$id_libro','$fecha','$devolucion')");
+    public function guardarReserva($id_usuario,$id_libro,$fecha,$devolucion,$reservado){
+        $this->conexion->consulta("INSERT INTO reservas (id_usuario,id_libro,fecha,devolucion,reservado) 
+                VALUES ('$id_usuario','$id_libro','$fecha','$devolucion','$reservado')");
         try{
             return true;
     }catch(PDOException $err){
@@ -125,17 +125,30 @@ class Reservas { //extends Base_Datos1
     }
 
     public function actualizarDevolucion($id){
-        $sql = ("UPDATE reservas SET devolucion = 1  WHERE id = $id");
+        $sql = ("UPDATE reservas SET devolucion = 1, reservado = 0 WHERE id = $id");
         $this -> conexion -> consulta($sql);
     }
 
     public function getReservasConFechaMenorAHoy() {
-        $this->conexion->consulta("SELECT r.*, u.nombre as nombre, u.socio as numero_socio 
-        FROM reservas r
-        INNER JOIN usuarios u ON u.id = r.id_usuario
-        WHERE DATE_ADD(fecha, INTERVAL 7 DAY) < NOW() AND NOT EXISTS (SELECT * FROM sanciones) 
-        ");
+        $this->conexion->consulta("SELECT r.*, u.nombre as nombre, u.socio as numero_socio , l.titulo as titulo 
+        FROM reservas r 
+        INNER JOIN usuarios u ON u.id = r.id_usuario 
+        INNER JOIN libros l ON r.id_libro = l.id 
+        WHERE DATE_ADD(fecha, INTERVAL 7 DAY) < NOW() AND NOT EXISTS (SELECT * FROM sanciones WHERE id_usuario = u.id)");
         return $this->conexion->extraer_todos();
+    }
+
+    public function mostrarReservados() {
+        $this->conexion->consulta("SELECT r.id as id_reserva, l.*,u.* FROM reservas r
+        INNER JOIN libros l ON r.id_libro = l.id
+        INNER JOIN usuarios u ON u.id = r.id_usuario
+        WHERE r.reservado = 1");
+        return $this->conexion->extraer_todos();
+    }
+
+    public function actualizarReservado($id_reserva) {
+        $sql = ("UPDATE reservas SET reservado = 2  WHERE id = $id_reserva");
+        $this -> conexion -> consulta($sql);
     }
 
 

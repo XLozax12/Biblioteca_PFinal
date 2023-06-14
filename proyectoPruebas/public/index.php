@@ -73,6 +73,10 @@ Router::add('POST','/prestar', function (){
 
     (new LibrosController())->prestar();});
 
+Router::add('POST','/prestarReservado', function (){
+
+    (new LibrosController())->prestarReservado();});
+
 Router::add('POST','/reservar', function (){
 
     (new LibrosController())->reservar();});

@@ -19,11 +19,6 @@
 	     /* align-items: center;  */
         
     }
-    .image{
-      display: flex;
-	    justify-content: center;
-      /* align-items: center; */
-    }
     .menu{
       display: flex;
 	    justify-content:  center;
@@ -38,11 +33,44 @@
       display: flex;
 	    justify-content: end;
     }
+    img{
+      width: 100px;
+      height: 100px;
+    }
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        background-color: #ffffcc;
+    }
+ 
+    th,
+    td {
+        padding: 5px;
+    }
+    
+    .menu{
+      display: flex;
+	    justify-content:  center;
+      color:black;
+    }
+        
+    a:visited {
+      text-decoration: none;
+      color:black;
+    }
+    .caja2{
+        display: flex;
+	      justify-content:  center;
+    }
 
     </style>
 </head>
 <body>
+<div class="image">
+<img src="../images/guadix1.png">
 <a href="logout" class="cerrar">Cerrar sesión</a>
+</div>
 <a href="home" class="biblioteca"><h1>Biblioteca Guadix</h1></a><br>
 <div class="menu">
     <ul>
@@ -71,12 +99,41 @@
         <?php endforeach; ?>
       </select>|
 
-<button type="submit" name="reservar" id="reservar">Reservar</button>
+<button type="submit" name="reservar" id="reservar">Prestar</button>
 </div><br>
 
 </form> <br><br>
-<div class="image">
-<img src="../images/guadix1.png">
-</div>
+
+<div class="caja2">
+<table>
+  <thead>
+    <tr>
+      <!-- <th>id</th> -->
+      <th>Numero Socio</th>
+      <th>Nombre</th>
+      <th>Titulo</th>
+      <th>Autor</th>
+      <th>Editorial</th>
+      <td><b>Operaciones</b></td>
+      
+    </tr>
+  </thead>
+  
+    <?php foreach($reservados as $fila):?>
+      <tr>
+      <!-- <td><?php //echo $fila["id"]?></td> -->
+      <td><?php echo $fila["socio"]?></td>
+      <td><?php echo $fila["nombre"]?></td>
+      <td><?php echo $fila["titulo"]?></td>
+      <td><?php echo $fila["autor"]?></td>
+      <td><?php echo $fila["editorial"]?></td>
+       <form action="prestarReservado" method="post">
+       <td><button type="submit"  name="id_reserva" value="<?= $fila["id_reserva"]; ?>">Prestar</button></td>
+       </form>
+      </tr>
+    <?php endforeach; ?>
+</table><br>
+  </div>
+
 </body>
 </html>

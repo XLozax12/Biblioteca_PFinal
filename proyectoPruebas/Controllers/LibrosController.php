@@ -32,8 +32,12 @@ class LibrosController{
     public function mostrarPrestar(){
         $libros = $this->libro->getAll();
         $usuarios = $this->usuario->mostrarUsuarios();
+
+        //DEVOLVER LOS RESERVADOS
+
+        $reservados = $this->reserva->mostrarReservados();
      
-        $this->pages->render('libro/Prestar_Libro',['libros'=>$libros,'usuarios'=>$usuarios]);
+        $this->pages->render('libro/Prestar_Libro',['libros'=>$libros,'usuarios'=>$usuarios,'reservados'=>$reservados]);
     }
 
     public function prestar(){
@@ -68,12 +72,13 @@ class LibrosController{
             
                 $fecha = date("Y-m-d");
                 $devolucion = 0;
+                $reservado = 2;
     
-                $result= $this->reserva->guardarReserva($_POST['usuario'],$_POST['libro'],$fecha,$devolucion);
+                $result= $this->reserva->guardarReserva($_POST['usuario'],$_POST['libro'],$fecha,$devolucion,$reservado);
                 
                 if($result){
                     $this->listadoCompleto();
-                    echo "<script>alert('Libro reservado con exito')</script>";
+                    echo "<script>alert('Libro prestado con exito')</script>";
                 }
 
                 }
@@ -85,6 +90,16 @@ class LibrosController{
                 $this->pages->render('libro/Prestar_Libro',['libros'=>$libros,'usuarios'=>$usuarios]);
             }
                   
+    }
+
+    public function prestarReservado() {
+        $id_reserva = $_POST['id_reserva'];
+        $reservado = 2;
+        $this->reserva->actualizarReservado($id_reserva);
+
+        $this->listadoCompleto();
+        echo "<script>alert('Libro prestado con exito')</script>";
+
     }
 
 
@@ -123,11 +138,12 @@ class LibrosController{
             
                 $fecha = date("Y-m-d");
                 $devolucion = 0;
+                $reservado = 1;
     
-                $result= $this->reserva->guardarReserva($id_usuario,$id_libro,$fecha,$devolucion);
+                $result= $this->reserva->guardarReserva($id_usuario,$id_libro,$fecha,$devolucion,$reservado);
                 
                 if($result){
-                    $this->listadoCompleto();
+                    $this->mostrarPrestar();
                     echo "<script>alert('Libro reservado con exito')</script>";
                 }
 

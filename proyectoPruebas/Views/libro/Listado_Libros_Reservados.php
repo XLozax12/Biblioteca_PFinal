@@ -86,7 +86,9 @@
       <th>Usuario</th>
       <th>Libro</th>
       <th>Fecha</th>
+      <th>Fecha Devolucion</th>
       <th>Devolucion</th>
+      <th>Estado</th>
       <td><b>Operaciones</b></td>
       
     </tr>
@@ -99,9 +101,11 @@
       <td><?php echo $fila["nombre_usuario"]?></td>
       <td><?php echo $fila["titulo"]?></td>
       <td><?php echo $fila["fecha"]?></td>
+      <td><?php echo date('Y-m-d', strtotime($fila["fecha"] . ' +7 days'))?></td>
       <td><?php echo $fila["devolucion"] == 1 ? 'Si' : 'No'?></td>
+      <td><?php echo $fila["reservado"] == 1 ? 'Reservado' : 'Prestado'?></td>
        <form action="eliminarReservados" method="post">
-       <td><button type="submit"  name="borrar" value="<?= $fila["id"]; ?>">Devolver</button></td>
+       <td><button type="submit"  name="borrar" value="<?= $fila["id"]; ?>"><?=$fila["reservado"] == 1 ? 'Anular reserva' : 'Devolver' ?></button></td>
        </form>
       </tr>
     <?php endforeach; ?>

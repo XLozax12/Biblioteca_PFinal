@@ -9,19 +9,23 @@
     .biblioteca{
       text-align: center;
       color:black;
-    }    
+    }  
+      
     .rol{
       text-align: center;
     }
+
     .menu{
       display: flex;
 	    justify-content:  center;
       color:black;
     }
+
     .cerrar{
       display: flex;
 	    justify-content: end;
     }
+
     table {
         border-collapse: collapse;
     }
@@ -37,19 +41,23 @@
     td {
         padding: 5px;
     }
+
     .caja1{
         display: flex;
 	      justify-content:  center;
     }
+
     p{
         display: flex;
 	      justify-content:  center;
           
     }
+
     a:visited {
       text-decoration: none;
       color:black;
     }
+
     img{
       width: 100px;
       height: 100px;

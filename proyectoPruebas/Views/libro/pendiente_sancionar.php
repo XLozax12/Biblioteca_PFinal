@@ -84,9 +84,10 @@
 <table>
   <thead>
     <tr>
-       <th>id</th> 
-       <th>Numero de socio</th>
-       <th>Nombre</th>
+      <th>id</th> 
+      <th>Numero de socio</th>
+      <th>Nombre</th>
+      <th>Libro</th>
       <th>Fecha</th>
       <td><b>Operaciones</b></td> 
       
@@ -100,6 +101,7 @@
       <td><?php echo $fila["id"]?></td>
       <td><?php echo $fila["numero_socio"]?></td>
       <td><?php echo $fila["nombre"]?></td>
+      <td><?php echo $fila["titulo"]?></td>
       <td><?php echo $fila["fecha"]?></td>
        <?php //print_r($fila); die; ?> 
        <form action="crearSancion" method="post">

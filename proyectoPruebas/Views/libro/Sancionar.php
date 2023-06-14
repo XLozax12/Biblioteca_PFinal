@@ -96,9 +96,10 @@
 <table>
   <thead>
     <tr>
-       <th>id</th> 
-       <th>Numero de socio</th>
-       <th>Nombre</th>
+      <th>id</th> 
+      <th>Numero de socio</th>
+      <th>Nombre</th>
+      <!-- <th>Libro</th> -->
       <th>Fecha Inicio</th>
       <th>Fecha fin</th>
       <td><b>Operaciones</b></td> 
@@ -109,10 +110,10 @@
     <?php foreach($sanciones as $fila):?> 
       <?php //echo"1";?>
       <tr>
-      <!-- <td><?php //echo $fila["id"]?></td> --> 
       <td><?php echo $fila["id"]?></td>
       <td><?php echo $fila["numero_socio"]?></td>
       <td><?php echo $fila["nombre"]?></td>
+      <!-- <td><?php// echo $fila["titulo"]?></td> -->
       <td><?php echo $fila["fecha_inicio"]?></td>
       <td><?php echo $fila["fecha_fin"]?></td>
        <?php //print_r($fila); die; ?> 
